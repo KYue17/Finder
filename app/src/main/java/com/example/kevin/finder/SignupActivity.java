@@ -1,5 +1,6 @@
 package com.example.kevin.finder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -33,8 +34,11 @@ public class SignupActivity extends ActionBarActivity{
                     Toast.makeText(getApplicationContext(), "Passwords don't match", Toast.LENGTH_LONG).show();
                     return;
                 }
+                // check if username is already used
                 else{
                     Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
+                    Intent createProfileIntent = new Intent(SignupActivity.this, CreateProfileActivity.class);
+                    startActivity(createProfileIntent);
                 }
             }
         });

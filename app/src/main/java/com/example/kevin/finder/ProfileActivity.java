@@ -11,16 +11,20 @@ import android.widget.*;
 public class ProfileActivity extends ActionBarActivity{
 
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        //retrieve person's profile from database using username
         Person p = new Person("name", 17);
-
+        p.addInterest("interest1");
+        p.addInterest("interest2");
+        p.addInterest("interest3");
         TextView textView1 = (TextView)findViewById(R.id.textView);
         TextView textView2 = (TextView)findViewById(R.id.textView2);
-        textView1.setText(p.getName());
-        textView2.setText(Integer.toString(p.getAge()));
+        TextView textView3 = (TextView) findViewById(R.id.textView3);
+        textView1.setText("Name : " + p.getName());
+        textView2.setText("Age : " + Integer.toString(p.getAge()));
+        textView3.setText("Interests\n" + p.getInterests());
 
     }
 
