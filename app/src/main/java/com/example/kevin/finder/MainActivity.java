@@ -6,18 +6,47 @@ import android.os.Bundle;
 import android.view.*;
 import android.content.Intent;
 import android.widget.*;
-
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 public class MainActivity extends ActionBarActivity {
+
+    CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_main);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+
         //Button goToLoginButton = (Button)findViewById(R.id.goToButtonSignIN);
         Button goToSignupButton = (Button)findViewById(R.id.goToButtonSignUP);
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginButton loginButton = (LoginButton)findViewById(R.id.fbLoginButton);
+        loginButton.setReadPermissions("user_friends");
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+
+            }
+        });
+
         goToSignupButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View onClickView){
                 Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);

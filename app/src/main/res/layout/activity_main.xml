@@ -21,4 +21,10 @@
             android:layout_below="@+id/goToButtonSignIN"
             android:text="Sign Up" />
 
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fbLoginButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_below="@id/goToButtonSignUP" />
 </RelativeLayout>
