@@ -24,12 +24,14 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_profile);
+        final Calendar c = Calendar.getInstance();
         TextView textView = (TextView) findViewById(R.id.birthday);
         textView.setTextSize(20);
-
         final EditText nameEnter = (EditText) findViewById(R.id.nameEnter);
         final DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
+        datePicker.setMaxDate(c.getTimeInMillis());
         Button confirmProfile = (Button) findViewById(R.id.confirmProfile);
+
         confirmProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
                 String name = nameEnter.getText().toString();
@@ -40,43 +42,42 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
                     int year = datePicker.getYear();
                     int day = datePicker.getDayOfMonth();
                     int month = datePicker.getMonth();
-                    if(month > 1) {
+                    if (month > 1) {
                         day += 31;
                     }
-                    if(month > 2) {
+                    if (month > 2) {
                         day += 28;
                     }
-                    if(month > 3) {
+                    if (month > 3) {
                         day += 31;
                     }
-                    if(month > 4) {
+                    if (month > 4) {
                         day += 30;
                     }
-                    if(month > 5) {
+                    if (month > 5) {
                         day += 31;
                     }
-                    if(month > 6) {
+                    if (month > 6) {
                         day += 30;
                     }
-                    if(month > 7) {
+                    if (month > 7) {
                         day += 31;
                     }
-                    if(month > 8) {
+                    if (month > 8) {
                         day += 31;
                     }
-                    if(month > 9) {
+                    if (month > 9) {
                         day += 30;
                     }
-                    if(month > 10) {
+                    if (month > 10) {
                         day += 31;
                     }
-                    if(month > 11) {
+                    if (month > 11) {
                         day += 30;
                     }
-                    if(month > 2 && (year%400==0 || (year%4==0 && year%100 != 0))) {
+                    if (month > 2 && (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0))) {
                         day += 1;
                     }
-                    final Calendar c = Calendar.getInstance();
                     int currYear = c.get(Calendar.YEAR);
                     int currDay = c.get(Calendar.DAY_OF_YEAR);
                     Integer age = currYear - year;
