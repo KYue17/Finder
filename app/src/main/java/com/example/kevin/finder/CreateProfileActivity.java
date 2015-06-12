@@ -84,7 +84,7 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
                     if (day > currDay) {
                         age--;
                     }
-                    Person p = new Person(name, age);
+                    Person p = new Person(1, name, age);
                     //store person in database based on username
                     Toast.makeText(getApplicationContext(), age.toString(), Toast.LENGTH_LONG).show();
                     Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);

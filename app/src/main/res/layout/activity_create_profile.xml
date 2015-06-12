@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:imeOptions="actionDone"
         android:hint="Name"/>
     <TextView
         android:id="@+id/birthday"

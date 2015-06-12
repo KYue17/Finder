@@ -4,8 +4,7 @@
     <string name="app_name">Finder</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="facebook_app_id">1614818685441691</string>
-    <string name="pick_date">Pick Birthday</string>
+    <string name="facebook_app_id">1618800061670181</string>
     <string-array name="months_array">
         <item>January</item>
         <item>February</item>
@@ -20,4 +19,5 @@
         <item>November</item>
         <item>December</item>
     </string-array>
+
 </resources>

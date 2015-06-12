@@ -12,10 +12,14 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import android.database.sqlite.*;
+
+import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
 
     CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +27,6 @@ public class MainActivity extends ActionBarActivity {
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_main);
 
-        //Button goToLoginButton = (Button)findViewById(R.id.goToButtonSignIN);
         Button goToSignupButton = (Button)findViewById(R.id.goToButtonSignUP);
 
         callbackManager = CallbackManager.Factory.create();
@@ -33,7 +36,8 @@ public class MainActivity extends ActionBarActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
+                Intent fbIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(fbIntent);
             }
 
             @Override
@@ -93,6 +97,9 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View onClickView){
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+
+
+                JSONObject object = new JSONObject();
 
                 if(username.equals("username") && password.equals("password")){
                     Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);

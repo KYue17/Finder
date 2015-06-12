@@ -1,7 +1,5 @@
 package com.example.kevin.finder;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -9,16 +7,20 @@ import java.util.TreeSet;
  */
 public class Person {
 
+    private int id;
     private String name;
     private int age;
 
     private TreeSet<String> interests;
 
-    public Person(String name, int age){
+    public Person(int id, String name, int age){
+        this.id = id;
         this.name = name;
         this.age = age;
         this.interests = new TreeSet<>();
     }
+
+    public int getId(){return this.id; }
 
     public String getName(){
         return this.name;
