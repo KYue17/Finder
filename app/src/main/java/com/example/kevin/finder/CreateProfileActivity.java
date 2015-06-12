@@ -2,85 +2,53 @@ package com.example.kevin.finder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Calendar;
+
 
 /**
  * Created by Tommy on 6/11/2015.
  */
 public class CreateProfileActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
 
-    protected void onCreate(Bundle savedInstanceState){
+    public static int day;
+    public static int year;
+
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_profile);
+        TextView textView = (TextView) findViewById(R.id.birthday);
+        textView.setTextSize(20);
 
         final EditText nameEnter = (EditText) findViewById(R.id.nameEnter);
-
-        Spinner monthSpinner = (Spinner) findViewById(R.id.monthSpinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> mAdapter = ArrayAdapter.createFromResource(this,
-                R.array.months_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        monthSpinner.setAdapter(mAdapter);
-
-        final int currYear = 2015;
-
-        Integer[] years = new Integer[125];
-        for(int i = 0; i < 125; i++)
-        {
-            years[i] = currYear - i;
-        }
-
-        final Spinner yearSpinner = (Spinner) findViewById(R.id.yearSpinner);
-        ArrayAdapter<Integer> yAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, years);
-       yearSpinner.setAdapter(yAdapter);
-
-        Integer[] days28 = new Integer[28];
-        for(int i = 0; i < 28; i++){
-            days28[i] = i+1;
-        }
-        Integer[] days29 = new Integer[29];
-        for(int i = 0; i < 29; i++){
-            days29[i] = i+1;
-        }
-        Integer[] days30 = new Integer[30];
-        for(int i = 0; i < 30; i++){
-            days30[i] = i+1;
-        }
-        Integer[] days31 = new Integer[31];
-        for(int i = 0; i < 31; i++){
-            days31[i] = i+1;
-        }
-
-        Spinner daySpinner = (Spinner) findViewById(R.id.daySpinner);
-        //if february and not leap year, use days28
-        //if february and leap year, use days29
-        //if april, june, september, november use days30
-        //if january, march, may, july, august, october, december use days31
-        ArrayAdapter<Integer> dAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, days31);
-        daySpinner.setAdapter(dAdapter);
 
         Button confirmProfile = (Button) findViewById(R.id.confirmProfile);
         confirmProfile.setOnClickListener(new View.OnClickListener(){
             public void onClick(View onClickView){
                 String name = nameEnter.getText().toString();
-                Integer age = currYear - (Integer)yearSpinner.getItemAtPosition(0); // subtract one if birthday not yet passed
-                Person p = new Person(name, age);
-                //store person in database based on username
                 if(name.equals("")) {
                     Toast.makeText(getApplicationContext(), "Field Empty", Toast.LENGTH_LONG).show();
                     return;
                 }
                 else {
+                    final Calendar c = Calendar.getInstance();
+                    int currYear = c.get(Calendar.YEAR);
+                    int currDay = c.get(Calendar.DAY_OF_YEAR);
+                    Integer age = currYear - year;
+                    if(day > currDay){
+                        age--;
+                    }
+                    Person p = new Person(name, age);
+                    //store person in database based on username
                     Toast.makeText(getApplicationContext(), age.toString(), Toast.LENGTH_LONG).show();
                     Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
                     startActivity(profileIntent);
@@ -109,6 +77,11 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     @Override
