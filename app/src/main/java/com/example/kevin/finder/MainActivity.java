@@ -12,6 +12,11 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.microsoft.windowsazure.mobileservices.*;
+import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
+
+import java.net.MalformedURLException;
 import android.database.sqlite.*;
 
 import org.json.JSONObject;
@@ -19,12 +24,30 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
 
     CallbackManager callbackManager;
-
+    private MobileServiceClient mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+        try {
+            mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", "tjziqMoVOuszxlpChPyGLVHsPexbFL10",this);
+            Item item = new Item();
+            item.Text = "Awesome item";
+            mClient.getTable(Item.class).insert(item, new TableOperationCallback<Item>() {
+                public void onCompleted(Item entity, Exception exception, ServiceFilterResponse response) {
+                    if (exception == null) {
+                        // Insert succeeded
+                    } else {
+                        // Insert failed
+                    }
+                }
+            });
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_main);
 
         Button goToSignupButton = (Button)findViewById(R.id.goToButtonSignUP);
