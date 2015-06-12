@@ -6,10 +6,20 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
+
+import java.net.MalformedURLException;
+
 /**
  * Created by Kevin on 6/10/2015.
  */
 public class SignupActivity extends ActionBarActivity{
+
+    private MobileServiceClient mClient;
+    private MobileServiceTable mPersonTable;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +47,27 @@ public class SignupActivity extends ActionBarActivity{
                 //check if username
                 else{
                     Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
-                    Intent createProfileIntent = new Intent(SignupActivity.this, CreateProfileActivity.class);
+
+                    Person p = new Person(username, password);
+
+                    //store person in database based on username
+
+                    try {
+                        mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", "tjziqMoVOuszxlpChPyGLVHsPexbFL10", SignupActivity.this);
+                        mPersonTable = mClient.getTable(Person.class);
+                        mPersonTable.insert(p, new TableOperationCallback<Person>() {
+                            public void onCompleted(Person entity, Exception exception, ServiceFilterResponse response) {
+                                if (exception == null) {
+                                    // Insert good
+                                } else {
+                                    // Insert failed
+                                }
+                            }
+                        });
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    Intent createProfileIntent = new Intent(SignupActivity.this,CreateProfileActivity.class);
                     startActivity(createProfileIntent);
                 }
             }

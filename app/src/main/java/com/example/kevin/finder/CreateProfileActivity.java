@@ -12,6 +12,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
+import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
+import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
+
+import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -20,6 +27,9 @@ import java.util.Date;
  * Created by Tommy on 6/11/2015.
  */
 public class CreateProfileActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
+
+    private MobileServiceClient mClient;
+    private MobileServiceTable mPersonTable;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +94,10 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
                     if (day > currDay) {
                         age--;
                     }
-                    Person p = new Person(1, name, age);
-                    //store person in database based on username
+
                     Toast.makeText(getApplicationContext(), age.toString(), Toast.LENGTH_LONG).show();
+
+
                     Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
                     startActivity(profileIntent);
                     return;

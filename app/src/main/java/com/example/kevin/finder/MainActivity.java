@@ -24,29 +24,11 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
 
     CallbackManager callbackManager;
-    private MobileServiceClient mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
-
-        try {
-            mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", "tjziqMoVOuszxlpChPyGLVHsPexbFL10",this);
-            Item item = new Item();
-            item.Text = "Awesome item";
-            mClient.getTable(Item.class).insert(item, new TableOperationCallback<Item>() {
-                public void onCompleted(Item entity, Exception exception, ServiceFilterResponse response) {
-                    if (exception == null) {
-                        // Insert succeeded
-                    } else {
-                        // Insert failed
-                    }
-                }
-            });
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
         setContentView(R.layout.activity_main);
 

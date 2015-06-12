@@ -1,5 +1,7 @@
 package com.example.kevin.finder;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.TreeSet;
 
 /**
@@ -7,39 +9,46 @@ import java.util.TreeSet;
  */
 public class Person {
 
-    private int id;
+    private String Id;
+    private final String username;
+    private final String password;
     private String name;
     private int age;
 
-    private TreeSet<String> interests;
+    private String interests;
 
-    public Person(int id, String name, int age){
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.interests = new TreeSet<>();
+    public Person(String username, String password){
+        this.username = username;
+        this.password = password;
+        this.interests = "";
     }
 
-    public int getId(){return this.id; }
+    public String getUsername(){return this.username; }
+
+    public String getPassword(){return this.password; }
 
     public String getName(){
         return this.name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     public int getAge(){
         return this.age;
     }
 
+    public void setAge(int age){
+        this.age = age;
+    }
+
     public String getInterests(){
-        String allInterests = "";
-        for(String interest: interests){
-            allInterests+=interest + "\n";
-        }
-        return allInterests;
+        return interests;
     }
 
     public void addInterest(String newInterest){
-        interests.add(newInterest);
+        interests += newInterest + "/n";
     }
 
 }

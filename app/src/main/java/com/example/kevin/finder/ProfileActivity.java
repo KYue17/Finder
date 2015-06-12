@@ -15,7 +15,7 @@ public class ProfileActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         //retrieve person's profile from database using username
-        Person p = new Person(1, "name", 17);
+        Person p = new Person("username", "password");
         p.addInterest("interest1");
         p.addInterest("interest2");
         p.addInterest("interest3");
