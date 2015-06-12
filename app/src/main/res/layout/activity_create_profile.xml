@@ -19,15 +19,15 @@
         android:layout_height="wrap_content"
         android:text="Birthday"
         android:layout_below="@+id/nameEnter"/>
-    <Button
-        android:id="@+id/datePickButton"
+    <DatePicker
+        android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pick_date"
-        android:onClick="showDatePickerDialog"
-        android:layout_below="@+id/birthday" />
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:layout_below="@+id/birthday"/>
     <Button
-        android:layout_below="@+id/datePickButton"
+        android:layout_below="@+id/datePicker"
         android:id="@+id/confirmProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

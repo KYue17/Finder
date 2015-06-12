@@ -13,15 +13,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
  * Created by Tommy on 6/11/2015.
  */
 public class CreateProfileActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
-
-    public static int day;
-    public static int year;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,21 +28,59 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         textView.setTextSize(20);
 
         final EditText nameEnter = (EditText) findViewById(R.id.nameEnter);
-
+        final DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
         Button confirmProfile = (Button) findViewById(R.id.confirmProfile);
-        confirmProfile.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View onClickView){
+        confirmProfile.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View onClickView) {
                 String name = nameEnter.getText().toString();
-                if(name.equals("")) {
+                if (name.equals("")) {
                     Toast.makeText(getApplicationContext(), "Field Empty", Toast.LENGTH_LONG).show();
                     return;
-                }
-                else {
+                } else {
+                    int year = datePicker.getYear();
+                    int day = datePicker.getDayOfMonth();
+                    int month = datePicker.getMonth();
+                    if(month > 1) {
+                        day += 31;
+                    }
+                    if(month > 2) {
+                        day += 28;
+                    }
+                    if(month > 3) {
+                        day += 31;
+                    }
+                    if(month > 4) {
+                        day += 30;
+                    }
+                    if(month > 5) {
+                        day += 31;
+                    }
+                    if(month > 6) {
+                        day += 30;
+                    }
+                    if(month > 7) {
+                        day += 31;
+                    }
+                    if(month > 8) {
+                        day += 31;
+                    }
+                    if(month > 9) {
+                        day += 30;
+                    }
+                    if(month > 10) {
+                        day += 31;
+                    }
+                    if(month > 11) {
+                        day += 30;
+                    }
+                    if(month > 2 && (year%400==0 || (year%4==0 && year%100 != 0))) {
+                        day += 1;
+                    }
                     final Calendar c = Calendar.getInstance();
                     int currYear = c.get(Calendar.YEAR);
                     int currDay = c.get(Calendar.DAY_OF_YEAR);
                     Integer age = currYear - year;
-                    if(day > currDay){
+                    if (day > currDay) {
                         age--;
                     }
                     Person p = new Person(name, age);
@@ -77,11 +113,6 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     @Override
