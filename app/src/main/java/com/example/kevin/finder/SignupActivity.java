@@ -1,5 +1,7 @@
 package com.example.kevin.finder;
 
+import android.os.AsyncTask;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,26 +50,33 @@ public class SignupActivity extends ActionBarActivity{
                 else{
                     Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG).show();
 
-                    Person p = new Person(username, password);
+                    final Person p = new Person();
+                    p.setUsername(username);
+                    p.setPassword(password);
 
                     //store person in database based on username
 
                     try {
                         mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", "tjziqMoVOuszxlpChPyGLVHsPexbFL10", SignupActivity.this);
                         mPersonTable = mClient.getTable(Person.class);
-                        mPersonTable.insert(p, new TableOperationCallback<Person>() {
-                            public void onCompleted(Person entity, Exception exception, ServiceFilterResponse response) {
-                                if (exception == null) {
-                                    // Insert good
-                                } else {
-                                    // Insert failed
+
+                        new AsyncTask<Void, Void, Void>() {
+
+                            @Override
+                            protected Void doInBackground(Void... params) {
+                                try {
+                                    mPersonTable.insert(p).get();
+                                } catch (Exception exception) {
                                 }
+                                return null;
                             }
-                        });
+                        }.execute();
+
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
                     Intent createProfileIntent = new Intent(SignupActivity.this,CreateProfileActivity.class);
+                    createProfileIntent.putExtra("myPerson", p);
                     startActivity(createProfileIntent);
                 }
             }

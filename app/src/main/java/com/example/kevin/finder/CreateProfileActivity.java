@@ -1,9 +1,12 @@
 package com.example.kevin.finder;
 
+import android.app.Service;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,10 +20,12 @@ import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
+import com.microsoft.windowsazure.mobileservices.table.TableQueryCallback;
 
 import java.net.MalformedURLException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -31,9 +36,13 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
     private MobileServiceClient mClient;
     private MobileServiceTable mPersonTable;
 
+    String name;
+    Integer age;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_profile);
+
         final Calendar c = Calendar.getInstance();
         TextView textView = (TextView) findViewById(R.id.birthday);
         textView.setTextSize(20);
@@ -42,9 +51,11 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         datePicker.setMaxDate(c.getTimeInMillis());
         Button confirmProfile = (Button) findViewById(R.id.confirmProfile);
 
+        final Person p = getIntent().getExtras().getParcelable("myPerson");
+
         confirmProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
-                String name = nameEnter.getText().toString();
+                name = nameEnter.getText().toString();
                 if (name.equals("")) {
                     Toast.makeText(getApplicationContext(), "Field Empty", Toast.LENGTH_LONG).show();
                     return;
@@ -90,23 +101,41 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
                     }
                     int currYear = c.get(Calendar.YEAR);
                     int currDay = c.get(Calendar.DAY_OF_YEAR);
-                    Integer age = currYear - year;
+                    age = currYear - year;
                     if (day > currDay) {
                         age--;
                     }
 
-                    Toast.makeText(getApplicationContext(), age.toString(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), p.getId(), Toast.LENGTH_LONG).show();
+
+                    try {
+                        mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", "tjziqMoVOuszxlpChPyGLVHsPexbFL10", CreateProfileActivity.this);
+                        mPersonTable = mClient.getTable(Person.class);
+                        updatePerson(p);
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
 
 
-                    Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
-                    startActivity(profileIntent);
-                    return;
                 }
             }
         });
+    }
 
+    public void updatePerson(Person person){
+        person.setName(name);
+        person.setAge(age);
 
-
+        mPersonTable.update(person, new TableOperationCallback<Person>(){
+            public void onCompleted(Person entity, Exception exception, ServiceFilterResponse response){
+                if(exception == null){
+                    Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
+                    startActivity(profileIntent);
+                }else{
+                    Log.d("Exception: ", exception.toString());
+                }
+            }
+        });
     }
 
     protected void onDestroy(){
