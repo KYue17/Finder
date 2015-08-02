@@ -22,6 +22,12 @@ import android.database.sqlite.*;
 import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
+    private EditText username;
+    private EditText password;
+    private Button login;
+    private TextView loginLockedTV;
+    private TextView attemptsLeftTV;
+    private TextView numberOfRemainingLoginAttemptsTV;
 
     CallbackManager callbackManager;
 
@@ -29,10 +35,10 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
-
         setContentView(R.layout.activity_main);
+        setupVariables();
 
-        Button goToSignupButton = (Button)findViewById(R.id.goToButtonSignUP);
+        Button goToSignupButton = (Button)findViewById(R.id.signupBtn);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -86,8 +92,35 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    public void authenticateLogin(View view) {
 
-    public void goToLogin(View view){
+        if (username.getText().toString().equals("a") &&
+                password.getText().toString().equals("a")) {
+            Person p = new Person();
+            p.setUsername(username.getText().toString());
+            p.setPassword(password.getText().toString());
+            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+            profileIntent.putExtra("myProfile", p);
+            startActivity(profileIntent);
+            Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Failure",
+                    Toast.LENGTH_SHORT).show();
+
+
+
+        }
+    }
+
+    private void setupVariables() {
+        username = (EditText) findViewById(R.id.usernameET);
+        password = (EditText) findViewById(R.id.passwordET);
+        login = (Button) findViewById(R.id.loginBtn);
+
+    }
+}
+
+/*    public void goToLogin(View view){
         final Dialog dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.login);
         dialog.setTitle("Login");
@@ -115,5 +148,6 @@ public class MainActivity extends ActionBarActivity {
         });
 
         dialog.show();
-    }
-}
+    }*/
+
+
