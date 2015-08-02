@@ -60,17 +60,16 @@ public class SignupActivity extends ActionBarActivity{
                         mClient = new MobileServiceClient("https://findr.azure-mobile.net/", "XHSiCtkXiYZWnXWkSOylArUhzIuAwK95", SignupActivity.this);
                         mPersonTable = mClient.getTable(Person.class);
 
-                        new AsyncTask<Void, Void, Void>() {
-
+                        mPersonTable.insert(p, new TableOperationCallback<Person>() {
                             @Override
-                            protected Void doInBackground(Void... params) {
-                                try {
-                                    mPersonTable.insert(p).get();
-                                } catch (Exception exception) {
+                            public void onCompleted(Person entity, Exception exception, ServiceFilterResponse response) {
+                                if(exception == null){
+
+                                }else{
+
                                 }
-                                return null;
                             }
-                        }.execute();
+                        });
 
                     } catch (MalformedURLException e) {
                         e.printStackTrace();

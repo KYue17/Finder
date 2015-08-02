@@ -103,9 +103,6 @@ public class MainActivity extends ActionBarActivity {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
-
-                JSONObject object = new JSONObject();
-
                 if(username.equals("username") && password.equals("password")){
                     Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
                     startActivity(profileIntent);

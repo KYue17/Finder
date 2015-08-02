@@ -1,5 +1,6 @@
 package com.example.kevin.finder;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -15,9 +16,9 @@ public class ProfileActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         //retrieve person's profile from database using username
-        Person p = new Person();
-        p.setName("Name");
-        p.setAge(17);
+
+        final Person p = getIntent().getExtras().getParcelable("myProfile");
+
         p.addInterest("interest1");
         p.addInterest("interest2");
         p.addInterest("interest3");
@@ -27,6 +28,15 @@ public class ProfileActivity extends ActionBarActivity{
         textView1.setText("Name : " + p.getName());
         textView2.setText("Age : " + Integer.toString(p.getAge()));
         textView3.setText("Interests\n" + p.getInterests());
+
+        Button viewProfiles = (Button)findViewById(R.id.viewProfiles);
+
+        viewProfiles.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View onClickView){
+                Intent viewProfilesIntent = new Intent(ProfileActivity.this, DisplayProfilesActivity.class);
+                startActivity(viewProfilesIntent);
+            }
+        });
 
     }
 

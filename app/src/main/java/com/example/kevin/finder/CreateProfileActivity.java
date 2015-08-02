@@ -36,6 +36,8 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
     private MobileServiceClient mClient;
     private MobileServiceTable mPersonTable;
 
+    private String azureCode = "tjziqMoVOuszxlpChPyGLVHsPexbFL10";
+
     String name;
     Integer age;
 
@@ -109,9 +111,12 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
                     Toast.makeText(getApplicationContext(), p.getId(), Toast.LENGTH_LONG).show();
 
                     try {
-                        mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", "tjziqMoVOuszxlpChPyGLVHsPexbFL10", CreateProfileActivity.this);
+                        mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", azureCode, CreateProfileActivity.this);
                         mPersonTable = mClient.getTable(Person.class);
                         updatePerson(p);
+                        Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
+                        profileIntent.putExtra("myProfile", p);
+                        startActivity(profileIntent);
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
@@ -129,8 +134,6 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         mPersonTable.update(person, new TableOperationCallback<Person>(){
             public void onCompleted(Person entity, Exception exception, ServiceFilterResponse response){
                 if(exception == null){
-                    Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
-                    startActivity(profileIntent);
                 }else{
                     Log.d("Exception: ", exception.toString());
                 }
