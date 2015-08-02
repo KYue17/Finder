@@ -127,18 +127,23 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         });
     }
 
-    public void updatePerson(Person person){
-        person.setName(name);
-        person.setAge(age);
+    public void updatePerson(final Person person) {
+        if (mClient == null) {
+            return;
+        }
 
-        mPersonTable.update(person, new TableOperationCallback<Person>(){
-            public void onCompleted(Person entity, Exception exception, ServiceFilterResponse response){
-                if(exception == null){
-                }else{
-                    Log.d("Exception: ", exception.toString());
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                mPersonTable.update(person).get();
+                } catch (Exception exception) {
+
                 }
+                return null;
             }
-        });
+        }.execute();
     }
 
     protected void onDestroy(){
