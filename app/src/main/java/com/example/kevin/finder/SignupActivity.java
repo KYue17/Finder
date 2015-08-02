@@ -76,6 +76,7 @@ public class SignupActivity extends ActionBarActivity{
                     }
                     Intent createProfileIntent = new Intent(SignupActivity.this,CreateProfileActivity.class);
                     createProfileIntent.putExtra("myPerson", p);
+                    createProfileIntent.putExtra("myClient", (Parcelable) mClient);
                     startActivity(createProfileIntent);
                 }
             }

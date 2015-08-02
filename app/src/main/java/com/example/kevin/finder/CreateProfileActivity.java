@@ -33,8 +33,8 @@ import java.util.List;
  */
 public class CreateProfileActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
 
-    private MobileServiceClient mClient;
-    private MobileServiceTable mPersonTable;
+    MobileServiceClient mClient = getIntent().getExtras().getParcelable("myClient");
+    MobileServiceTable mPersonTable = mClient.getTable(Person.class);
 
     private String azureCode = "tjziqMoVOuszxlpChPyGLVHsPexbFL10";
 
@@ -54,6 +54,7 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         Button confirmProfile = (Button) findViewById(R.id.confirmProfile);
 
         final Person p = getIntent().getExtras().getParcelable("myPerson");
+
 
         confirmProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
@@ -111,14 +112,13 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
                     Toast.makeText(getApplicationContext(), p.getId(), Toast.LENGTH_LONG).show();
 
                     try {
-                        mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", azureCode, CreateProfileActivity.this);
                         mPersonTable = mClient.getTable(Person.class);
                         updatePerson(p);
                         Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
                         profileIntent.putExtra("myProfile", p);
                         startActivity(profileIntent);
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
                     }
 
 
