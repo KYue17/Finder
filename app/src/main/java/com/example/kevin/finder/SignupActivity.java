@@ -57,7 +57,7 @@ public class SignupActivity extends ActionBarActivity{
                     //store person in database based on username
 
                     try {
-                        mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", "tjziqMoVOuszxlpChPyGLVHsPexbFL10", SignupActivity.this);
+                        mClient = new MobileServiceClient("https://findr.azure-mobile.net/", "XHSiCtkXiYZWnXWkSOylArUhzIuAwK95", SignupActivity.this);
                         mPersonTable = mClient.getTable(Person.class);
 
                         new AsyncTask<Void, Void, Void>() {
