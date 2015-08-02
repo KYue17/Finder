@@ -1,5 +1,0 @@
-<root>
-    <item name='com.microsoft.windowsazure.mobileservices.table.TableOperationCallback'>
-        <annotation name='java.lang.annotation.Deprecated' />
-    </item>
-</root>
