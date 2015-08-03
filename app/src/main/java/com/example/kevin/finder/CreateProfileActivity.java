@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -33,10 +35,8 @@ import java.util.List;
  */
 public class CreateProfileActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
 
-    private MobileServiceClient mClient;
-    private MobileServiceTable mPersonTable;
-
-    private String azureCode = "tjziqMoVOuszxlpChPyGLVHsPexbFL10";
+    MobileServiceClient mClient;
+    MobileServiceTable mPersonTable;
 
     String name;
     Integer age;
@@ -54,6 +54,7 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         Button confirmProfile = (Button) findViewById(R.id.confirmProfile);
 
         final Person p = getIntent().getExtras().getParcelable("myPerson");
+
 
         confirmProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
@@ -111,14 +112,16 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
                     Toast.makeText(getApplicationContext(), p.getId(), Toast.LENGTH_LONG).show();
 
                     try {
-                        mClient = new MobileServiceClient("https://finderandroid.azure-mobile.net/", azureCode, CreateProfileActivity.this);
+                        mClient = new MobileServiceClient("https://findr.azure-mobile.net/",getString(R.string.azure_code), CreateProfileActivity.this);
                         mPersonTable = mClient.getTable(Person.class);
+
                         updatePerson(p);
+
                         Intent profileIntent = new Intent(CreateProfileActivity.this, ProfileActivity.class);
                         profileIntent.putExtra("myProfile", p);
                         startActivity(profileIntent);
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                        Log.d("Exception", e.toString());
                     }
 
 
@@ -128,22 +131,19 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
     }
 
     public void updatePerson(final Person person) {
+        person.setAge(age);
+        person.setName(name);
+
         if (mClient == null) {
             return;
         }
 
-        new AsyncTask<Void, Void, Void>() {
-
+        mPersonTable.update(person, new TableOperationCallback() {
             @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                mPersonTable.update(person).get();
-                } catch (Exception exception) {
+            public void onCompleted(Object entity, Exception exception, ServiceFilterResponse response) {
 
-                }
-                return null;
             }
-        }.execute();
+        });
     }
 
     protected void onDestroy(){

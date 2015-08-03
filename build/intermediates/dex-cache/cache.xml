@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\classes-e8598cb82c9554f07890220d484c55b8160a5c32.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\18.0\cce0823396aa693798f8882e64213b1772032b09\guava-18.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="cce0823396aa693798f8882e64213b1772032b09">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\guava-18.0-724e644fda2e7bbaa2a7b2e521ac91d731387dd6.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.1.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a78bfd2ec508b123ee7c03f4006ba7996ef9a8dc">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\classes-4a309b55c2c82e60def3594d4d7c19b3b3fdcfae.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-5580805ba7594e0a0c8a7b42874207aa019e2684.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-a633011c94a0cd3bf83e7669681c8a21730c5cab.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\.gradle\caches\modules-2\files-2.1\com.microsoft.azure\azure-mobile-services-android-sdk\2.0.2\856c0726767e0e5e960832781400716116bb8a54\azure-mobile-services-android-sdk-2.0.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="856c0726767e0e5e960832781400716116bb8a54">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\azure-mobile-services-android-sdk-2.0.2-68a865c4da2e6492324b623d762511954675a43b.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.2.0\6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd\bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\bolts-android-1.2.0-82ccf0b027d9949013d050ab29a3bd91984799cd.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\classes-7923e380fe815c3460ae6e6764c53352efb5777f.jar" />
+    </item>
+    <item
+        jar="C:\Users\Kevin\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="C:\Users\Kevin\AndroidStudioProjects\Finder\app\build\intermediates\pre-dexed\debug\gson-2.3-62d4485bddfffd5e7e3ffc75ea6846cedb11ce40.jar" />
+    </item>
+
+</items>

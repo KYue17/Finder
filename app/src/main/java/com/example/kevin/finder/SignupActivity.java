@@ -53,11 +53,12 @@ public class SignupActivity extends ActionBarActivity{
                     final Person p = new Person();
                     p.setUsername(username);
                     p.setPassword(password);
+                    p.setId(username);
 
                     //store person in database based on username
 
                     try {
-                        mClient = new MobileServiceClient("https://findr.azure-mobile.net/", "XHSiCtkXiYZWnXWkSOylArUhzIuAwK95", SignupActivity.this);
+                        mClient = new MobileServiceClient("https://findr.azure-mobile.net/", getString(R.string.azure_code), SignupActivity.this);
                         mPersonTable = mClient.getTable(Person.class);
 
                         mPersonTable.insert(p, new TableOperationCallback<Person>() {
@@ -70,10 +71,10 @@ public class SignupActivity extends ActionBarActivity{
                                 }
                             }
                         });
-
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
+
                     Intent createProfileIntent = new Intent(SignupActivity.this,CreateProfileActivity.class);
                     createProfileIntent.putExtra("myPerson", p);
                     startActivity(createProfileIntent);

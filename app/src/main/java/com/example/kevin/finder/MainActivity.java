@@ -14,6 +14,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.microsoft.windowsazure.mobileservices.*;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 
 import java.net.MalformedURLException;
@@ -24,6 +25,9 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
 
     CallbackManager callbackManager;
+
+    private MobileServiceClient mClient;
+    private MobileServiceTable mPersonTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +108,12 @@ public class MainActivity extends ActionBarActivity {
                 String password = etPassword.getText().toString();
 
                 if(username.equals("username") && password.equals("password")){
+                    Person p = new Person();
+                    p.setUsername(username);
+                    p.setPassword(password);
                     Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                    profileIntent.putExtra("myProfile", p);
                     startActivity(profileIntent);
-                    Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
                 }else{
                     Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
                 }
@@ -115,5 +121,16 @@ public class MainActivity extends ActionBarActivity {
         });
 
         dialog.show();
+    }
+
+    public void lookup(View view){
+        try {
+            mClient = new MobileServiceClient("https://findr.azure-mobile.net/", "XHSiCtkXiYZWnXWkSOylArUhzIuAwK95", MainActivity.this);
+            mPersonTable = mClient.getTable(Person.class);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
