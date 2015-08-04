@@ -3,8 +3,8 @@ package com.example.kevin.finder;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.ScrollView;
-import android.widget.LinearLayout;
-import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 /**
@@ -12,25 +12,22 @@ import android.widget.TextView;
  */
 public class DisplayProfilesActivity extends ActionBarActivity{
 
+    ScrollView scrollView;
+    TableLayout tableLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        ScrollView sv = new ScrollView(this);
-        LinearLayout ll = new LinearLayout(this);
-        sv.addView(ll);
-
-        TextView tv = new TextView(this);
-        tv.setText("Profiles");
-        ll.addView(tv);
-
-        for(int i = 0; i < 20; i++){
-            Button b = new Button(this);
-            b.setId(i);
-            ll.addView(b);
+        setContentView(R.layout.activity_display_profiles);
+        scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        tableLayout = new TableLayout(this);
+        for(int i = 1; i <= 50; i++){
+            TableRow tableRow = new TableRow(this);
+            TextView textView = new TextView(this);
+            textView.setId(i);
+            textView.setText("Id: " + i);
+            tableRow.addView(textView);
+            tableLayout.addView(tableRow);
         }
-
-        setContentView(sv);
+        scrollView.addView(tableLayout);
     }
-
 }
