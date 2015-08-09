@@ -2,16 +2,15 @@ package com.example.kevin.finder;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -33,7 +32,7 @@ import java.util.List;
 /**
  * Created by Tommy on 6/11/2015.
  */
-public class CreateProfileActivity extends ActionBarActivity implements AdapterView.OnItemSelectedListener {
+public class CreateProfileActivity extends ActionBarActivity {
 
     MobileServiceClient mClient;
     MobileServiceTable mPersonTable;
@@ -41,6 +40,7 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
     String name;
     Integer age;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_profile);
@@ -146,10 +146,12 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         });
     }
 
+    @Override
     protected void onDestroy(){
         super.onDestroy();
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -162,15 +164,5 @@ public class CreateProfileActivity extends ActionBarActivity implements AdapterV
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }
