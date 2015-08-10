@@ -30,6 +30,7 @@ public class ProfileActivity extends ActionBarActivity{
         textView3.setText("Interests\n" + p.getInterests());
 
         Button viewProfiles = (Button)findViewById(R.id.viewProfiles);
+        Button interestSearch = (Button)findViewById(R.id.interestSearch);
 
         viewProfiles.setOnClickListener(new View.OnClickListener(){
             public void onClick(View onClickView){
@@ -39,6 +40,13 @@ public class ProfileActivity extends ActionBarActivity{
             }
         });
 
+        interestSearch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View onClickView) {
+                Intent temp = new Intent(ProfileActivity.this, InterestActivity.class);
+                temp.putExtra("MyProfile", p);
+                startActivity(temp);
+            }
+        });
     }
 
     @Override
