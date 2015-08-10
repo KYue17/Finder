@@ -3,6 +3,7 @@ package com.example.kevin.finder;
 import android.app.Dialog;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.content.Intent;
 import android.widget.*;
@@ -16,8 +17,11 @@ import com.microsoft.windowsazure.mobileservices.*;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
+import com.microsoft.windowsazure.mobileservices.table.TableQueryCallback;
 
 import java.net.MalformedURLException;
+import java.util.List;
+
 import android.database.sqlite.*;
 
 import org.json.JSONObject;
@@ -27,11 +31,14 @@ public class MainActivity extends ActionBarActivity {
     CallbackManager callbackManager;
 
     private MobileServiceClient mClient;
-    private MobileServiceTable mPersonTable;
-    private EditText username;
-    private EditText password;
-    private Button login;
-    private Button signup;
+    private MobileServiceTable<Person> mPersonTable;
+    private EditText usernameET;
+    private EditText passwordET;
+    private Button loginButton;
+    private Button signupButton;
+    private String username;
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
         setupVariables();
 
         callbackManager = CallbackManager.Factory.create();
-       // Button signup = (Button)findViewById(R.id.signupBtn);
+        // Button signup = (Button)findViewById(R.id.signupBtn);
         LoginButton loginButton = (LoginButton)findViewById(R.id.fbLoginButton);
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -62,7 +69,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        signup.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View onClickView){
+                authenticateLogin(onClickView);
+            }
+        });
+
+        signupButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
                 Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(signupIntent);
@@ -96,29 +109,40 @@ public class MainActivity extends ActionBarActivity {
 
     public void authenticateLogin(View view) {
 
-        if (username.getText().toString().equals("a") &&
-                password.getText().toString().equals("a")) {
-            Person p = new Person();
-            p.setUsername(username.getText().toString());
-            p.setPassword(password.getText().toString());
-            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
-            profileIntent.putExtra("myProfile", p);
-            startActivity(profileIntent);
-            Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Failure",
-                    Toast.LENGTH_SHORT).show();
+        username = usernameET.getText().toString();
+        password = passwordET.getText().toString();
 
-
-
+        try {
+            mPersonTable.execute(new TableQueryCallback<Person>() {
+                @Override
+                public void onCompleted(List<Person> result, int count, Exception exception, ServiceFilterResponse response) {
+                    if(exception == null){
+                        for(Person p : result){
+                            if(p.getUsername().equals(username)){
+                                if(p.getPassword().equals(password)){
+                                    Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                                    profileIntent.putExtra("myProfile", p);
+                                    startActivity(profileIntent);
+                                    Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
+                                }else{
+                                    Toast.makeText(MainActivity.this, "Invalid Username/Password Combination", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }
+                        Toast.makeText(MainActivity.this, "Invalid Username", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } catch (Exception exception) {
+            Log.d("Exception: ", exception.toString());
         }
     }
 
     private void setupVariables() {
-        username = (EditText) findViewById(R.id.usernameET);
-        password = (EditText) findViewById(R.id.passwordET);
-        login = (Button) findViewById(R.id.loginBtn);
-        signup = (Button) findViewById(R.id.signupBtn);
+        usernameET = (EditText) findViewById(R.id.usernameET);
+        passwordET = (EditText) findViewById(R.id.passwordET);
+        loginButton = (Button) findViewById(R.id.loginBtn);
+        signupButton = (Button) findViewById(R.id.signupBtn);
 
     }
 }

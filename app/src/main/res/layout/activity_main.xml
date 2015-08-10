@@ -36,6 +36,8 @@
         android:layout_alignBottom="@+id/textView2"
         android:layout_marginLeft="35dp"
         android:layout_toRightOf="@+id/textView2"
+        android:nextFocusDown="@+id/passwordET"
+        android:inputType="text"
         android:hint="Username" >
         <requestFocus />
     </EditText>
