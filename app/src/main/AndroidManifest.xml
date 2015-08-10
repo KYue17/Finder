@@ -33,6 +33,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kevin.finder.MainActivity" />
         </activity>
+        <activity android:name=".InterestActivity"
+            android:label="Interests"
+            android:parentActivityName=".ProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.kevin.finder.MainActivity" />
+        </activity>
         <activity
             android:name=".SignupActivity"
             android:label="Sign Up"
