@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -7,24 +8,79 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
 
-        <Button
-            android:id="@+id/goToButtonSignIN"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:onClick="goToLogin"/>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Finder"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
-            android:id="@+id/goToButtonSignUP"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/goToButtonSignIN"
-            android:text="Sign Up" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="75dp"
+        android:layout_marginLeft="10dp"
+        android:text="Username:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <com.facebook.login.widget.LoginButton
-            android:id="@+id/fbLoginButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_below="@+id/goToButtonSignUP" />
+    <EditText
+        android:id="@+id/usernameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_marginLeft="35dp"
+        android:layout_toRightOf="@+id/textView2"
+        android:hint="Username" >
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="40dp"
+        android:text="Password:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/passwordET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/usernameET"
+        android:layout_alignRight="@+id/usernameET"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordET"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="94dp"
+        android:onClick="authenticateLogin"
+        android:text="Login" />
+    <Button
+        android:id="@+id/signupBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginBtn"
+        android:layout_centerHorizontal="true"
+        android:onClick="authenticateLogin"
+        android:text="Sign Up" />
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fbLoginButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/signupBtn" />
 </RelativeLayout>

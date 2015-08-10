@@ -14,6 +14,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.microsoft.windowsazure.mobileservices.*;
 import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
+import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 
 import java.net.MalformedURLException;
@@ -22,26 +23,25 @@ import android.database.sqlite.*;
 import org.json.JSONObject;
 
 public class MainActivity extends ActionBarActivity {
-    private EditText username;
-    private EditText password;
-    private Button login;
-    private TextView loginLockedTV;
-    private TextView attemptsLeftTV;
-    private TextView numberOfRemainingLoginAttemptsTV;
 
     CallbackManager callbackManager;
 
+    private MobileServiceClient mClient;
+    private MobileServiceTable mPersonTable;
+    private EditText username;
+    private EditText password;
+    private Button login;
+    private Button signup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this.getApplicationContext());
+
         setContentView(R.layout.activity_main);
         setupVariables();
 
-        Button goToSignupButton = (Button)findViewById(R.id.signupBtn);
-
         callbackManager = CallbackManager.Factory.create();
-
+       // Button signup = (Button)findViewById(R.id.signupBtn);
         LoginButton loginButton = (LoginButton)findViewById(R.id.fbLoginButton);
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -62,12 +62,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        goToSignupButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View onClickView){
+        signup.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View onClickView) {
                 Intent signupIntent = new Intent(MainActivity.this, SignupActivity.class);
                 startActivity(signupIntent);
             }
         });
+
     }
 
 
@@ -92,6 +93,7 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     public void authenticateLogin(View view) {
 
         if (username.getText().toString().equals("a") &&
@@ -116,38 +118,7 @@ public class MainActivity extends ActionBarActivity {
         username = (EditText) findViewById(R.id.usernameET);
         password = (EditText) findViewById(R.id.passwordET);
         login = (Button) findViewById(R.id.loginBtn);
+        signup = (Button) findViewById(R.id.signupBtn);
 
     }
 }
-
-/*    public void goToLogin(View view){
-        final Dialog dialog = new Dialog(MainActivity.this);
-        dialog.setContentView(R.layout.login);
-        dialog.setTitle("Login");
-
-        Button loginButton = (Button)dialog.findViewById(R.id.buttonSignIn);
-
-        final EditText etUsername = (EditText)dialog.findViewById(R.id.usernameLogin);
-        final EditText etPassword = (EditText)dialog.findViewById(R.id.passwordLogin);
-
-        loginButton.setOnClickListener(new View.OnClickListener(){
-
-            public void onClick(View onClickView){
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-
-                if(username.equals("username") && password.equals("password")){
-                    Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
-                    startActivity(profileIntent);
-                    Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
-                    dialog.dismiss();
-                }else{
-                    Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        dialog.show();
-    }*/
-
-

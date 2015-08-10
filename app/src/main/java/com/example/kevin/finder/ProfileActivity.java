@@ -11,7 +11,7 @@ import android.widget.*;
  */
 public class ProfileActivity extends ActionBarActivity{
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -30,17 +30,31 @@ public class ProfileActivity extends ActionBarActivity{
         textView3.setText("Interests\n" + p.getInterests());
 
         Button viewProfiles = (Button)findViewById(R.id.viewProfiles);
+        Button interestSearch = (Button)findViewById(R.id.interestSearch);
 
         viewProfiles.setOnClickListener(new View.OnClickListener(){
             public void onClick(View onClickView){
                 Intent viewProfilesIntent = new Intent(ProfileActivity.this, DisplayProfilesActivity.class);
+                viewProfilesIntent.putExtra("MyProfile", p);
                 startActivity(viewProfilesIntent);
             }
         });
 
+        interestSearch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View onClickView) {
+                Intent temp = new Intent(ProfileActivity.this, InterestActivity.class);
+                temp.putExtra("MyProfile", p);
+                startActivity(temp);
+            }
+        });
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+    }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
