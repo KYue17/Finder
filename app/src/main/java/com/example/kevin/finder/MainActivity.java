@@ -20,6 +20,7 @@ import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 import com.microsoft.windowsazure.mobileservices.table.TableQueryCallback;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.database.sqlite.*;
@@ -48,10 +49,9 @@ public class MainActivity extends ActionBarActivity {
         setupVariables();
 
         callbackManager = CallbackManager.Factory.create();
-        // Button signup = (Button)findViewById(R.id.signupBtn);
-        LoginButton loginButton = (LoginButton)findViewById(R.id.fbLoginButton);
-        loginButton.setReadPermissions("user_friends");
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        LoginButton fbLoginButton = (LoginButton)findViewById(R.id.fbLoginButton);
+        fbLoginButton.setReadPermissions("user_friends");
+        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Intent fbIntent = new Intent(MainActivity.this, ProfileActivity.class);
@@ -113,23 +113,40 @@ public class MainActivity extends ActionBarActivity {
         password = passwordET.getText().toString();
 
         try {
+            mClient = new MobileServiceClient("https://findr.azure-mobile.net/",getString(R.string.azure_code), MainActivity.this);
+            mPersonTable = mClient.getTable(Person.class);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
             mPersonTable.execute(new TableQueryCallback<Person>() {
                 @Override
                 public void onCompleted(List<Person> result, int count, Exception exception, ServiceFilterResponse response) {
+                    ArrayList<Person> personArrayList = new ArrayList<Person>();
+                    for(Person p : result){
+                        personArrayList.add(p);
+                    }
+                    boolean userFound = false;
                     if(exception == null){
-                        for(Person p : result){
+                        for(Person p : personArrayList){
                             if(p.getUsername().equals(username)){
+                                userFound = true;
                                 if(p.getPassword().equals(password)){
                                     Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
                                     profileIntent.putExtra("myProfile", p);
+                                    profileIntent.putParcelableArrayListExtra("peopleArrayList", personArrayList);
                                     startActivity(profileIntent);
                                     Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
                                 }else{
                                     Toast.makeText(MainActivity.this, "Invalid Username/Password Combination", Toast.LENGTH_LONG).show();
                                 }
+                                break;
                             }
                         }
-                        Toast.makeText(MainActivity.this, "Invalid Username", Toast.LENGTH_LONG).show();
+                        if(userFound == false) {
+                            Toast.makeText(MainActivity.this, "Invalid Username", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });

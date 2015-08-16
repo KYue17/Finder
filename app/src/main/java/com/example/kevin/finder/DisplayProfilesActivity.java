@@ -19,7 +19,9 @@ import com.microsoft.windowsazure.mobileservices.MobileServiceException;
 import com.microsoft.windowsazure.mobileservices.MobileServiceList;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -39,6 +41,7 @@ public class DisplayProfilesActivity extends ActionBarActivity{
         setContentView(R.layout.activity_display_profiles);
 
         final Person p = getIntent().getExtras().getParcelable("myProfile");
+        ArrayList<Person> personArrayList = getIntent().getParcelableArrayListExtra("personArrayList");
 
         try {
             mClient = new MobileServiceClient("https://findr.azure-mobile.net/",getString(R.string.azure_code), DisplayProfilesActivity.this);
@@ -47,25 +50,26 @@ public class DisplayProfilesActivity extends ActionBarActivity{
             e.printStackTrace();
         }
 
-        getDataFromTable();
+        getDataFromTable(personArrayList);
     }
 
-    public void getDataFromTable(){
+    public void getDataFromTable(ArrayList<Person> personArrayList){
         scrollView = (ScrollView)findViewById(R.id.scroll_view);
         tableLayout = new TableLayout(this);
 
         try {
-            final MobileServiceList<Person> result = mPersonTable.execute().get();
             int textViewId = 0;
-            for(Person person : result){
+            for(Person person : personArrayList){
                 TableRow tableRow = new TableRow(this);
                 TextView textView = new TextView(this);
                 textView.setId(textViewId);
-                textView.setText("Username: " + person.getUsername() + " | Id: " + textViewId);
+                //textView.setText("Username: " + person.getUsername() + " | Id: " + textViewId);
+                textView.setText("Id: " + textViewId);
                 textViewId++;
                 tableRow.addView(textView);
                 tableLayout.addView(tableRow);
             }
+
         } catch (Exception exception){
             Log.d("Exception: ", exception.toString());
         }

@@ -61,7 +61,7 @@ public class Person implements Parcelable{
         return interests;
     }
     public void addInterest(String newInterest){
-        interests += newInterest + "/n";
+        interests += newInterest + "\n";
     }
 
     @Override

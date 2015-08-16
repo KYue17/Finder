@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by Kevin on 6/10/2015.
  */
@@ -18,10 +20,8 @@ public class ProfileActivity extends ActionBarActivity{
         //retrieve person's profile from database using username
 
         final Person p = getIntent().getExtras().getParcelable("myProfile");
+        final ArrayList<Person> personArrayList = getIntent().getParcelableArrayListExtra("personArrayList");
 
-        p.addInterest("interest1");
-        p.addInterest("interest2");
-        p.addInterest("interest3");
         TextView textView1 = (TextView)findViewById(R.id.textView);
         TextView textView2 = (TextView)findViewById(R.id.textView2);
         TextView textView3 = (TextView) findViewById(R.id.textView3);
@@ -36,15 +36,16 @@ public class ProfileActivity extends ActionBarActivity{
             public void onClick(View onClickView){
                 Intent viewProfilesIntent = new Intent(ProfileActivity.this, DisplayProfilesActivity.class);
                 viewProfilesIntent.putExtra("MyProfile", p);
+                viewProfilesIntent.putParcelableArrayListExtra("peopleArrayList", personArrayList);
                 startActivity(viewProfilesIntent);
             }
         });
 
         interestSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
-                Intent temp = new Intent(ProfileActivity.this, InterestActivity.class);
-                temp.putExtra("MyProfile", p);
-                startActivity(temp);
+                Intent interestIntent = new Intent(ProfileActivity.this, InterestActivity.class);
+                interestIntent.putExtra("MyProfile", p);
+                startActivity(interestIntent);
             }
         });
     }
