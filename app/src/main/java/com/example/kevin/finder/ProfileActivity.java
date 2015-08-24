@@ -16,7 +16,7 @@ public class ProfileActivity extends ActionBarActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+          setContentView(R.layout.activity_profile);
         //retrieve person's profile from database using username
 
         final Person p = getIntent().getExtras().getParcelable("myProfile");

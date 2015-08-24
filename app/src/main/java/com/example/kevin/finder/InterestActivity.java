@@ -30,6 +30,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -101,8 +102,38 @@ public class InterestActivity extends ActionBarActivity {
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                p.addInterest(listItems.get(position));
-                updatePerson(p);
+                final int arrayPosition = position;
+                /*PopupMenu popupMenu = new PopupMenu(InterestActivity.this, listView);
+                popupMenu.getMenuInflater().inflate(R.menu.add_or_delete_interest_popup, popupMenu.getMenu());*/
+                PopupMenu popupMenu = new PopupMenu(InterestActivity.this, view);
+                popupMenu.inflate(R.menu.add_or_delete_interest_popup);
+                popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        boolean success = false;
+                        if(item.getTitle().equals("Add")){
+                            if(p.getInterests().contains(listItems.get(arrayPosition))){
+                                Toast.makeText(InterestActivity.this, "Interest Already Present", Toast.LENGTH_LONG).show();
+                            }else {
+                                p.addInterest(listItems.get(arrayPosition));
+                                updatePerson(p);
+                                success = true;
+                            }
+                        }else{
+                            if(!p.getInterests().contains(listItems.get(arrayPosition))){
+                                Toast.makeText(InterestActivity.this, "Interest Not Present", Toast.LENGTH_LONG).show();
+                            }else {
+                                p.deleteInterest(listItems.get(arrayPosition));
+                                updatePerson(p);
+                                success = true;
+                            }
+                        }
+                        if(success == true) {
+                            Toast.makeText(InterestActivity.this, item.getTitle() + "Success", Toast.LENGTH_LONG).show();
+                        }
+                        return true;
+                    }
+                });
             }
         });
 

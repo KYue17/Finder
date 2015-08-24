@@ -63,6 +63,10 @@ public class Person implements Parcelable{
     public void addInterest(String newInterest){
         interests += newInterest + "\n";
     }
+    public void deleteInterest(String interest){
+        String fullDelete = interest+"\n";
+        interests.replace(fullDelete, "");
+    }
 
     @Override
     public int describeContents() {
