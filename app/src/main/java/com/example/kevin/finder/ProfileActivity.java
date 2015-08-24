@@ -18,7 +18,7 @@ public class ProfileActivity extends ActionBarActivity{
         super.onCreate(savedInstanceState);
           setContentView(R.layout.activity_profile);
         //retrieve person's profile from database using username
-
+        ArrayAdapter<String> adapter;
         final Person p = getIntent().getExtras().getParcelable("myProfile");
         final ArrayList<Person> personArrayList = getIntent().getParcelableArrayListExtra("personArrayList");
 
@@ -27,7 +27,11 @@ public class ProfileActivity extends ActionBarActivity{
         TextView textView3 = (TextView) findViewById(R.id.textView3);
         textView1.setText("Name : " + p.getName());
         textView2.setText("Age : " + Integer.toString(p.getAge()));
-        textView3.setText("Interests\n" + p.getInterests());
+        String[] separated = p.getInterests().split("\n");
+        ListView listView = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<String>(this,
+                R.layout.list_item, R.id.product_name, separated);
+        listView.setAdapter(adapter);
 
         Button viewProfiles = (Button)findViewById(R.id.viewProfiles);
         Button interestSearch = (Button)findViewById(R.id.interestSearch);
@@ -35,8 +39,8 @@ public class ProfileActivity extends ActionBarActivity{
         viewProfiles.setOnClickListener(new View.OnClickListener(){
             public void onClick(View onClickView){
                 Intent viewProfilesIntent = new Intent(ProfileActivity.this, DisplayProfilesActivity.class);
-                viewProfilesIntent.putExtra("MyProfile", p);
-                viewProfilesIntent.putParcelableArrayListExtra("peopleArrayList", personArrayList);
+                viewProfilesIntent.putExtra("myProfile", p);
+                viewProfilesIntent.putParcelableArrayListExtra("personArrayList", personArrayList);
                 startActivity(viewProfilesIntent);
             }
         });
@@ -44,7 +48,7 @@ public class ProfileActivity extends ActionBarActivity{
         interestSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
                 Intent interestIntent = new Intent(ProfileActivity.this, InterestActivity.class);
-                interestIntent.putExtra("MyProfile", p);
+                interestIntent.putExtra("myProfile", p);
                 startActivity(interestIntent);
             }
         });

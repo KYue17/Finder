@@ -84,7 +84,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -135,7 +134,7 @@ public class MainActivity extends ActionBarActivity {
                                 if(p.getPassword().equals(password)){
                                     Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
                                     profileIntent.putExtra("myProfile", p);
-                                    profileIntent.putParcelableArrayListExtra("peopleArrayList", personArrayList);
+                                    profileIntent.putParcelableArrayListExtra("personArrayList", personArrayList);
                                     startActivity(profileIntent);
                                     Toast.makeText(MainActivity.this, "Success", Toast.LENGTH_LONG).show();
                                 }else{

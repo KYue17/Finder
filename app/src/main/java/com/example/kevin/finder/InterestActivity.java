@@ -103,8 +103,6 @@ public class InterestActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 final int arrayPosition = position;
-                /*PopupMenu popupMenu = new PopupMenu(InterestActivity.this, listView);
-                popupMenu.getMenuInflater().inflate(R.menu.add_or_delete_interest_popup, popupMenu.getMenu());*/
                 PopupMenu popupMenu = new PopupMenu(InterestActivity.this, view);
                 popupMenu.inflate(R.menu.add_or_delete_interest_popup);
                 popupMenu.show();

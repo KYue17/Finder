@@ -9,10 +9,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.Collections;
 
 import com.microsoft.windowsazure.mobileservices.MobileServiceClient;
 import com.microsoft.windowsazure.mobileservices.MobileServiceException;
@@ -34,9 +38,12 @@ public class DisplayProfilesActivity extends ActionBarActivity{
 
     ScrollView scrollView;
     TableLayout tableLayout;
+    ArrayList<String> temp = new ArrayList<String>();
 
+    ArrayAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState){
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_profiles);
 
@@ -50,32 +57,61 @@ public class DisplayProfilesActivity extends ActionBarActivity{
             e.printStackTrace();
         }
 
-        getDataFromTable(personArrayList);
+        getDataFromTable(personArrayList, p);
     }
 
-    public void getDataFromTable(ArrayList<Person> personArrayList){
+    public void getDataFromTable(ArrayList<Person> personArrayList, Person user){
         scrollView = (ScrollView)findViewById(R.id.scroll_view);
         tableLayout = new TableLayout(this);
 
         try {
             int textViewId = 0;
             for(Person person : personArrayList){
-                TableRow tableRow = new TableRow(this);
-                TextView textView = new TextView(this);
-                textView.setId(textViewId);
-                //textView.setText("Username: " + person.getUsername() + " | Id: " + textViewId);
-                textView.setText("Id: " + textViewId);
-                textViewId++;
-                tableRow.addView(textView);
-                tableLayout.addView(tableRow);
+                if(!person.getUsername().equals(user.getUsername())){
+                    String[] tempInterestArray = person.getInterests().split("\n");
+                    ArrayList<String> commonInterests = new ArrayList<String>();
+                    for(String interest : tempInterestArray) {
+                        if (user.getInterests().contains(interest) && !interest.equals("")) {
+                            commonInterests.add(interest);
+                        }
+                    }
+                    if(commonInterests.size() != 0) {
+                        Collections.sort(commonInterests);
+                        String displayInterests = "";
+                        if (commonInterests.size() > 2) {
+                            displayInterests += commonInterests.get(0) + ", " + commonInterests.get(1) + "," + commonInterests.get(2) + "...";
+                        } else if(commonInterests.size() == 2){
+                            displayInterests += commonInterests.get(0) + ", " + commonInterests.get(1);
+                        }else{
+                            displayInterests += commonInterests.get(0);
+                        }
+//                        TableRow tableRow = new TableRow(this);
+//                        TextView textView = new TextView(this);
+//                        textView.setId(textViewId);
+
+
+
+                        temp.add("Username: " + person.getUsername() + " | " + commonInterests.size() + "interests in common" + " | " +
+                            displayInterests);
+//                        textViewId++;
+//                        tableRow.addView(textView);
+//                        tableLayout.addView(tableRow);
+
+                    }
+                }
             }
 
         } catch (Exception exception){
             Log.d("Exception: ", exception.toString());
         }
 
-        scrollView.addView(tableLayout);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<String>(this,
+                R.layout.list_item, R.id.product_name, temp);
+        listView.setAdapter(adapter);
+
     }
+
 
     @Override
     protected void onDestroy(){
