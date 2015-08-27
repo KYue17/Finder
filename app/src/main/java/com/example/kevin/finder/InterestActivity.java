@@ -5,13 +5,8 @@ import com.microsoft.windowsazure.mobileservices.http.ServiceFilterResponse;
 import com.microsoft.windowsazure.mobileservices.table.MobileServiceTable;
 import com.microsoft.windowsazure.mobileservices.table.TableOperationCallback;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.TaskStackBuilder;
@@ -35,9 +30,6 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class InterestActivity extends ActionBarActivity {
-
-    // List view
-    private ListView lv;
 
     // Listview Adapter
     ArrayAdapter<String> adapter;

@@ -9,8 +9,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -57,15 +61,34 @@ public class DisplayProfilesActivity extends ActionBarActivity{
             e.printStackTrace();
         }
 
-        getDataFromTable(personArrayList, p);
+        final ArrayList<Person> personsWithCommonInterests = getDataFromTable(personArrayList, p);
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        adapter = new ArrayAdapter<String>(this,
+                R.layout.list_item, R.id.product_name, temp);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                final int arrayPosition = position;
+                Person otherPerson = personsWithCommonInterests.get(arrayPosition);
+                Intent otherProfileIntent = new Intent(DisplayProfilesActivity.this, OtherProfileActivity.class);
+                otherProfileIntent.putExtra("otherProfile", otherPerson);
+                startActivity(otherProfileIntent);
+
+            }
+        });
     }
 
-    public void getDataFromTable(ArrayList<Person> personArrayList, Person user){
+    public ArrayList<Person> getDataFromTable(ArrayList<Person> personArrayList, Person user){
         scrollView = (ScrollView)findViewById(R.id.scroll_view);
         tableLayout = new TableLayout(this);
 
+        ArrayList<Person> tempPersonArrayList = new ArrayList<Person>();
+
         try {
-            int textViewId = 0;
+//          int textViewId = 0;
             for(Person person : personArrayList){
                 if(!person.getUsername().equals(user.getUsername())){
                     String[] tempInterestArray = person.getInterests().split("\n");
@@ -89,27 +112,22 @@ public class DisplayProfilesActivity extends ActionBarActivity{
 //                        TextView textView = new TextView(this);
 //                        textView.setId(textViewId);
 
-
-
                         temp.add("Username: " + person.getUsername() + " | " + commonInterests.size() + "interests in common" + " | " +
                             displayInterests);
 //                        textViewId++;
 //                        tableRow.addView(textView);
 //                        tableLayout.addView(tableRow);
 
+                        tempPersonArrayList.add(person);
                     }
                 }
             }
 
-        } catch (Exception exception){
+        } catch (Exception exception) {
             Log.d("Exception: ", exception.toString());
         }
 
-        ListView listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this,
-                R.layout.list_item, R.id.product_name, temp);
-        listView.setAdapter(adapter);
-
+        return tempPersonArrayList;
     }
 
 

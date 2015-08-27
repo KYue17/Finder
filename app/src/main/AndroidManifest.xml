@@ -26,6 +26,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kevin.finder.MainActivity" />
         </activity>
+        <activity
+            android:name=".OtherProfileActivity"
+            android:label="OtherProfile"
+            android:parentActivityName=".DisplayProfilesActivity"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.kevin.finder.MainActivity" />
+        </activity>
         <activity android:name=".InterestActivity"
             android:label="Interests"
             android:parentActivityName=".ProfileActivity">
@@ -51,7 +60,8 @@
         </activity>
         <activity android:name=".DisplayProfilesActivity"
             android:label="Display Profiles"
-            android:parentActivityName=".ProfileActivity">
+            android:parentActivityName=".ProfileActivity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.kevin.finder.MainActivity" />
