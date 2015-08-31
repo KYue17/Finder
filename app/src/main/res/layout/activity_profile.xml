@@ -25,7 +25,8 @@
         android:textSize="20dp"
         android:layout_below="@id/textView"
         android:layout_centerHorizontal="true" />
-    /*<TextView
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -34,14 +35,33 @@
         android:layout_below="@id/textView2"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/textView4"
+        android:textSize="16dp"
+        android:layout_below="@id/textView3"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/textView5"
+        android:textSize="20dp"
+        android:layout_below="@id/textView4"
+        android:layout_centerHorizontal="true"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="View Profiles"
         android:id="@+id/viewProfiles"
         android:textSize="20dp"
-        android:layout_below="@id/textView3"
+        android:layout_below="@id/textView5"
         android:layout_centerHorizontal="true"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,11 +70,22 @@
         android:textSize="20dp"
         android:layout_below="@id/viewProfiles"
         android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/textView6"
+        android:textSize="20dp"
+        android:layout_below="@id/interestSearch"
+        android:layout_centerHorizontal="true"/>
+
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/interestSearch"
+        android:layout_below="@id/textView6"
         />
 
 </RelativeLayout>

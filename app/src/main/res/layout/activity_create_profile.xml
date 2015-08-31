@@ -13,14 +13,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="true"
-        android:imeOptions="actionDone"
+        android:nextFocusDown="@+id/phoneEnter"
         android:hint="Name"/>
+    <EditText
+        android:id="@+id/phoneEnter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameEnter"
+        android:singleLine="true"
+        android:hint="Phone Number"
+        android:inputType="number"/>
+    <EditText
+        android:id="@+id/emailEnter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phoneEnter"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        android:hint="Email Address"/>
     <TextView
         android:id="@+id/birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Birthday"
-        android:layout_below="@+id/nameEnter"/>
+        android:layout_below="@+id/emailEnter"/>
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"

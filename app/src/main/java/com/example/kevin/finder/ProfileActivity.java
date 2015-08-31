@@ -7,6 +7,8 @@ import android.view.*;
 import android.widget.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by Kevin on 6/10/2015.
@@ -24,14 +26,20 @@ public class ProfileActivity extends ActionBarActivity{
 
         TextView textView1 = (TextView)findViewById(R.id.textView);
         TextView textView2 = (TextView)findViewById(R.id.textView2);
-        TextView textView3 = (TextView) findViewById(R.id.textView3);
-        textView1.setText("Name : " + p.getName());
-        textView2.setText("Age : " + Integer.toString(p.getAge()));
+        TextView textView3 = (TextView)findViewById(R.id.textView3);
+        TextView textView4 = (TextView)findViewById(R.id.textView4);
+
+        textView1.setText("Name: " + p.getName());
+        textView2.setText("Age: " + Integer.toString(p.getAge()));
+        textView3.setText("Phone: " + p.getPhoneNumber());
+        textView4.setText("Email: " + p.getEmailAddress());
+
         String[] separated = p.getInterests().split("\n");
         ListView listView = (ListView) findViewById(R.id.listView);
         adapter = new ArrayAdapter<String>(this,
                 R.layout.list_item, R.id.product_name, separated);
         listView.setAdapter(adapter);
+        Arrays.sort(separated);
 
         Button viewProfiles = (Button)findViewById(R.id.viewProfiles);
         Button interestSearch = (Button)findViewById(R.id.interestSearch);
@@ -48,7 +56,7 @@ public class ProfileActivity extends ActionBarActivity{
         interestSearch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
                 Intent interestIntent = new Intent(ProfileActivity.this, InterestActivity.class);
-                interestIntent.putExtra("myProfile", p);
+                interestIntent.putExtra("MyProfile", p);
                 startActivity(interestIntent);
             }
         });

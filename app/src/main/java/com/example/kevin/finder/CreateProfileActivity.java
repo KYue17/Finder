@@ -39,6 +39,8 @@ public class CreateProfileActivity extends ActionBarActivity {
 
     String name;
     Integer age;
+    String phoneNumber;
+    String emailAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +51,20 @@ public class CreateProfileActivity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.birthday);
         textView.setTextSize(20);
         final EditText nameEnter = (EditText) findViewById(R.id.nameEnter);
+        final EditText phoneEnter = (EditText) findViewById(R.id.phoneEnter);
+        final EditText emailEnter = (EditText) findViewById(R.id.emailEnter);
         final DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
         datePicker.setMaxDate(c.getTimeInMillis());
         Button confirmProfile = (Button) findViewById(R.id.confirmProfile);
 
         final Person p = getIntent().getExtras().getParcelable("myPerson");
 
-
         confirmProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
                 name = nameEnter.getText().toString();
-                if (name.equals("")) {
+                phoneNumber = phoneEnter.getText().toString();
+                emailAddress = emailEnter.getText().toString();
+                if (name.equals("") || phoneNumber.equals("") || emailAddress.equals("")) {
                     Toast.makeText(getApplicationContext(), "Field Empty", Toast.LENGTH_LONG).show();
                     return;
                 } else {
@@ -133,6 +138,8 @@ public class CreateProfileActivity extends ActionBarActivity {
     public void updatePerson(final Person person) {
         person.setAge(age);
         person.setName(name);
+        person.setPhoneNumber(phoneNumber);
+        person.setEmailAddress(emailAddress);
 
         if (mClient == null) {
             return;
