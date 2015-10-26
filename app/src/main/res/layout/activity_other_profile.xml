@@ -49,14 +49,23 @@
         android:layout_height="wrap_content"
         android:text=""
         android:id="@+id/opTextView5"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:layout_below="@id/opTextView4"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/opTextView6"
+        android:textSize="20dp"
+        android:layout_below="@id/opTextView5"
         android:layout_centerHorizontal="true"/>
 
     <ListView
         android:id="@+id/opListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/opTextView5" />
+        android:layout_below="@id/opTextView6" />
 
 </RelativeLayout>

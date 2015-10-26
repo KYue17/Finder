@@ -39,6 +39,7 @@ public class CreateProfileActivity extends ActionBarActivity {
 
     String name;
     Integer age;
+    Integer zipcode;
     String phoneNumber;
     String emailAddress;
 
@@ -51,6 +52,7 @@ public class CreateProfileActivity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.birthday);
         textView.setTextSize(20);
         final EditText nameEnter = (EditText) findViewById(R.id.nameEnter);
+        final EditText zipcodeEnter = (EditText) findViewById(R.id.zipcodeEnter);
         final EditText phoneEnter = (EditText) findViewById(R.id.phoneEnter);
         final EditText emailEnter = (EditText) findViewById(R.id.emailEnter);
         final DatePicker datePicker = (DatePicker) findViewById(R.id.datePicker);
@@ -62,12 +64,17 @@ public class CreateProfileActivity extends ActionBarActivity {
         confirmProfile.setOnClickListener(new View.OnClickListener() {
             public void onClick(View onClickView) {
                 name = nameEnter.getText().toString();
+                zipcode = Integer.parseInt(zipcodeEnter.getText().toString());
                 phoneNumber = phoneEnter.getText().toString();
                 emailAddress = emailEnter.getText().toString();
                 if (name.equals("") || phoneNumber.equals("") || emailAddress.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Field Empty", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Field(s) Empty", Toast.LENGTH_LONG).show();
                     return;
-                } else {
+                }else if(String.valueOf(zipcode).length() != 5 || String.valueOf(phoneNumber).length() != 10){
+                    Toast.makeText(getApplicationContext(), "Invalid Field(s)", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else {
                     int year = datePicker.getYear();
                     int day = datePicker.getDayOfMonth();
                     int month = datePicker.getMonth();
@@ -138,6 +145,7 @@ public class CreateProfileActivity extends ActionBarActivity {
     public void updatePerson(final Person person) {
         person.setAge(age);
         person.setName(name);
+        person.setZipcode(zipcode);
         person.setPhoneNumber(phoneNumber);
         person.setEmailAddress(emailAddress);
 

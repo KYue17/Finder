@@ -91,34 +91,38 @@ public class DisplayProfilesActivity extends ActionBarActivity{
 //          int textViewId = 0;
             for(Person person : personArrayList){
                 if(!person.getUsername().equals(user.getUsername())){
-                    String[] tempInterestArray = person.getInterests().split("\n");
-                    ArrayList<String> commonInterests = new ArrayList<String>();
-                    for(String interest : tempInterestArray) {
-                        if (user.getInterests().contains(interest) && !interest.equals("")) {
-                            commonInterests.add(interest);
+                    if((String.valueOf(person.getZipcode()).charAt(0) == String.valueOf(user.getZipcode()).charAt(0)) &&
+                            (String.valueOf(person.getZipcode()).charAt(1) == String.valueOf(user.getZipcode()).charAt(1))) {
+                        String[] tempInterestArray = person.getInterests().split("\n");
+                        ArrayList<String> commonInterests = new ArrayList<String>();
+                        for (String interest : tempInterestArray) {
+                            if (user.getInterests().contains(interest) && !interest.equals("")) {
+                                commonInterests.add(interest);
+                            }
                         }
-                    }
-                    if(commonInterests.size() != 0) {
-                        Collections.sort(commonInterests);
-                        String displayInterests = "";
-                        if (commonInterests.size() > 2) {
-                            displayInterests += commonInterests.get(0) + ", " + commonInterests.get(1) + "," + commonInterests.get(2) + "...";
-                        } else if(commonInterests.size() == 2){
-                            displayInterests += commonInterests.get(0) + ", " + commonInterests.get(1);
-                        }else{
-                            displayInterests += commonInterests.get(0);
+
+                        if (commonInterests.size() != 0) {
+                            Collections.sort(commonInterests);
+                            String displayInterests = "";
+                            if (commonInterests.size() > 2) {
+                                displayInterests += commonInterests.get(0) + ", " + commonInterests.get(1) + "," + commonInterests.get(2) + "...";
+                            } else if (commonInterests.size() == 2) {
+                                displayInterests += commonInterests.get(0) + ", " + commonInterests.get(1);
+                            } else {
+                                displayInterests += commonInterests.get(0);
+                            }
+                            //                        TableRow tableRow = new TableRow(this);
+                            //                        TextView textView = new TextView(this);
+                            //                        textView.setId(textViewId);
+
+                            temp.add("Username: " + person.getUsername() + " | " + commonInterests.size() + "interests in common" + " | " +
+                                    displayInterests);
+                            //                        textViewId++;
+                            //                        tableRow.addView(textView);
+                            //                        tableLayout.addView(tableRow);
+
+                            tempPersonArrayList.add(person);
                         }
-//                        TableRow tableRow = new TableRow(this);
-//                        TextView textView = new TextView(this);
-//                        textView.setId(textViewId);
-
-                        temp.add("Username: " + person.getUsername() + " | " + commonInterests.size() + "interests in common" + " | " +
-                            displayInterests);
-//                        textViewId++;
-//                        tableRow.addView(textView);
-//                        tableLayout.addView(tableRow);
-
-                        tempPersonArrayList.add(person);
                     }
                 }
             }

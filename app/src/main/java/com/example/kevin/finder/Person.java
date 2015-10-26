@@ -19,6 +19,7 @@ public class Person implements Parcelable{
     private String password;
     private String name;
     private int age;
+    private int zipcode;
     private String phonenumber;
     private String emailaddress;
 
@@ -59,6 +60,9 @@ public class Person implements Parcelable{
         this.age = age;
     }
 
+    public int getZipcode(){return this.zipcode; }
+    public void setZipcode(int zipcode) {this.zipcode = zipcode; }
+
     public String getPhoneNumber(){
         return this.phonenumber;
     }
@@ -96,6 +100,7 @@ public class Person implements Parcelable{
         dest.writeString(this.password);
         dest.writeString(this.name);
         dest.writeInt(this.age);
+        dest.writeInt(this.zipcode);
         dest.writeString(this.phonenumber);
         dest.writeString(this.emailaddress);
         dest.writeString(this.interests);
@@ -107,6 +112,7 @@ public class Person implements Parcelable{
         this.password = in.readString();
         this.name = in.readString();
         this.age = in.readInt();
+        this.zipcode = in.readInt();
         this.phonenumber = in.readString();
         this.emailaddress = in.readString();
         this.interests = in.readString();

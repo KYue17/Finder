@@ -16,10 +16,18 @@
         android:nextFocusDown="@+id/phoneEnter"
         android:hint="Name"/>
     <EditText
-        android:id="@+id/phoneEnter"
+        android:id="@+id/zipcodeEnter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nameEnter"
+        android:singleLine="true"
+        android:hint="Zipcode"
+        android:inputType="number"/>
+    <EditText
+        android:id="@+id/phoneEnter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/zipcodeEnter"
         android:singleLine="true"
         android:hint="Phone Number"
         android:inputType="number"/>

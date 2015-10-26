@@ -26,11 +26,13 @@ public class OtherProfileActivity extends ActionBarActivity{
         TextView opTextView2 = (TextView)findViewById(R.id.opTextView2);
         TextView opTextView3 = (TextView)findViewById(R.id.opTextView3);
         TextView opTextView4 = (TextView)findViewById(R.id.opTextView4);
+        TextView opTextView5 = (TextView)findViewById(R.id.opTextView5);
 
         opTextView1.setText("Name : " + p.getName());
         opTextView2.setText("Age : " + Integer.toString(p.getAge()));
         opTextView3.setText("Phone: " + p.getPhoneNumber());
         opTextView4.setText("Email: " + p.getEmailAddress());
+        opTextView5.setText("Zipcode: " + p.getZipcode());
 
         String[] separated = p.getInterests().split("\n");
         ListView listView = (ListView) findViewById(R.id.opListView);
